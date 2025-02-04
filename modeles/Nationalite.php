@@ -9,7 +9,7 @@ class Nationalite {
  *
  * @var int
  */
-    private $numContient;          
+    private $numContinent;          
     /**
      * Numero du contient
      * @var int 
@@ -55,19 +55,19 @@ class Nationalite {
  
 /**
  * Renvoie l'objet contient
- * @return contient
+ * @return continent
  */
-public function getNumContient()
+public function getNumContinent()
 {
-return $this->numContient :: findyById($this->numContient); // on recupere le contient 
+return $this->numContinent :: findyById($this->numContinent); // on recupere le contient 
 }
 
 /**
  * Set the value of numContient
  */
-public function setNumContient(Contient $contient): self
+public function setNumContinent(Contient $contient): self
 {
-$this->numContient = $Contient->getNum();
+$this->numContinent = $Continent->getNum();
 
 return $this;
 }
@@ -92,13 +92,13 @@ return $this;
 /**
  * trouve une nationalite par son num
  * @param integer $id numero continent
- * @return contient objet contient trouve
+ * @return continent objet contient trouve
  */
 
 public static function findById(int $id) :nationalite
 {
-    $req=MonPdo::getInstance()-> prepare("select * from contient where num= :id"); //on le demande de selectioner le num qui se nom id  avec where
-    $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'contient'); //on veut recuperer la class
+    $req=MonPdo::getInstance()-> prepare("select * from continent where num= :id"); //on le demande de selectioner le num qui se nom id  avec where
+    $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'continent'); //on veut recuperer la class
     $req->binParam('id',$id);
     $req->execute();
     $leResultat=$req->fetchAll();
@@ -108,15 +108,15 @@ public static function findById(int $id) :nationalite
 /**
  * permettre a ajouter
  * @param integer $contient contient a ajouter
- * @return contient resultat (1 si l'operation a reussi , 0 sinon)
+ * @return continent resultat (1 si l'operation a reussi , 0 sinon)
  */
 
 
 public static function  add(contient $contient) :int
 {
-    $req=MonPdo::getInstance()-> prepare("insert * from natioanlite(libelle,numContient) values(:libelle, :numContient)"); //
+    $req=MonPdo::getInstance()-> prepare("insert * from nationalite(libelle,numContinent) values(:libelle, :numContinent)"); //
     $req->binParam(':libelle',$natioanlite->getLibelle());
-    $req->binParam(':numContient',$natioanlite->NumContient());
+    $req->binParam(':numContinent',$natioanlite->NumContinent());
     $nb=$req->execute();   
     return $nb; //
 }
@@ -131,7 +131,7 @@ public static function  update(nationalite $natioanlite) :int
 $req=MonPdo::getInstance()-> prepare ("update natioanlite set libelle= :libelle, numContient= :numContient where num=id");
 $req->binParam('id',$natioanlite->getNum());
 $req->binParam('libelle',$natioanlite->getLibelle());
-$req->binParam(':numContient',$natioanlite->NumContient());
+$req->binParam(':numContinent',$natioanlite->NumContinent());
 $nb=$req->execute();   
 return $nb; 
 
@@ -142,10 +142,10 @@ return $nb;
 
 
 }
-public static function  delete(contient $contient) :int // la suppression
+public static function  delete(continent $continent) :int // la suppression
 {
-    $req=MonPdo::getInstance()-> prepare ("delete contient where num= :id "); 
-$req->binParam('id',$contient->getNum());
+    $req=MonPdo::getInstance()-> prepare ("delete continent where num= :id "); 
+$req->binParam('id',$continent->getNum());
 $nb=$req->execute();   
 return $nb; //
 }

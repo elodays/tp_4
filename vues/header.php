@@ -61,22 +61,26 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Gestion des Contients</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="index.php?=contients">Liste des contients</a>
-          <a class="dropdown-item" href="#">Ajouter un contient</a>
+          <a class="dropdown-item" href="index.php?uc=continents&action=liste">Liste des continents</a>
+          <a class="dropdown-item" href="index.php?uc=continents&action=add">Ajouter un continent</a>
           <a class="dropdown-item" href="#"></a>
         </div>
       </li>
     </ul>
   </div>
 </nav>
-  if (!empty($_GET)){
-  if ($_GET ['libelle'] !=""){ $texteReq.= " and n.libelle like '%'";}
-  if ($_GET ['continent'] !="tous"){ $texteReq.= " and c.num =" .$_GET['contient'];}
-}
-$texteReq.= "order by n.libelle";
-$req=$monPdo->prepare("select n.num, n.libelle as 'libnation' , c.libelle as 'libcontinent' from nationalite n, continent c where n.numContinent=c.num" );
-$req->setFetchMode(PDO :: FETCH_OBJ);
-$req->execute($texteReq);
-$lesnationalites=$req->fetchAll();
+<?php
 if(!empty($_SESSION['message'])){
-$mesMessage=$_SESSION['message']; }   
+  $mesMessage=$_SESSION['message'];
+  foreach($mesMessage as $key=>$message){
+  echo '<div class="container" pt -5">
+   <div class="alert alert- ' .$key.'warning alert-dismissible fade show" role="alert">'.$message.'
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+  </div>';
+  }
+  $_SESSION['message']=[];
+  }
+  ?>
