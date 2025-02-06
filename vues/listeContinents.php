@@ -13,14 +13,14 @@
   </thead>
   <tbody>
     <?php
-    foreach ($lescontinents as $continent){
+    foreach ($lesContinents as $continent){
 echo "<tr>";
 echo "<td class='col-md-2'>".$continent->getNum()."</td>";
 echo "<td class='col-md-8'>".$continent->getLibelle()."</td>";
 echo "<td class='col-md-2'>
- <a href='formNationalitercopy.php?action=Modifier&num='".$continent->getNum()." class ='btn btn-primary'><i class ='lni lni-pencil-1'></i></a>
+ <a href='index.php?uc=continents&action=update&num=".$continent->getNum()."' class ='btn btn-primary'><i class ='lni lni-pencil-1'></i></a>
 <a href='#modalSuppression' data-target='#modalSuppression' data-toggle='modal' data-message='voulez vous supprimer cette nationaliter ?'
- data-suppression='supprimeNationaliter.php?num=".$continent->getNum()."' class='btn btn-danger'><i class='lni lni-trash-3'></i>
+ data-suppression='index.php?uc=continents&action=delete&num=".$continent->getNum()."' class='btn btn-danger'><i class='lni lni-trash-3'></i>
  </a>
 </td>";
 echo "</tr>";

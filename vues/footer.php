@@ -8,7 +8,7 @@
         <p>Voulez vous supprimer cette nationalité ?</p>
       </div>
       <div class="modal-footer">
-        <a href="" class="btn btn-primary" id="btnSuppr">Supprimer</a>
+        <a href="index.php?uc=continents&action=liste" class="btn btn-primary" id="btnSuppr">Supprimer</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne pas supprimer</button>
       </div>
     </div>
@@ -31,7 +31,8 @@
     });
 
 
-
+    ob_end_flush
 </script>
 </body>
+
 </html>

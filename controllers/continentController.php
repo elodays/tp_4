@@ -1,29 +1,57 @@
-    }else{
-$action=$_GET['action']; // recuperer l inde action // ensuite on va lui demander de regarder se qu'il a mis dans action avec les switch
-switch($action)  {
-    case 'liste' :
-        $lescontinents=continent::findAll(); // il va faire appel a se modele dans la base de donner 
-        include('vues/listeContinents.php'); // on va appeller  le dossier vue dans laquelle il a la liste des contient avec inclue
-    case 'add' :
-        $mode="Ajouter";
-        include('vues/formContinent.php');
-    case 'update':
-                         
-                break;
-     case 'valideForm' :
-        $continent=new Contient();
-        if(empty($_POST['libelle']));
-        continent->setLibelle(£_POST['libelle']);
-        $nb=Continent::add($continent);
-        $message ="modifié";
-        }else{ 
+<?php
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 
+switch ($action) {
+    case 'liste':
+        $lesContinents = Continent::findAll();
+        include('vues/listeContinents.php');
+        break;
+
+    case 'add':
+        $mode = "Ajouter";
+        include('vues/formContinent.php');
+        break;
+
+    case 'update':
+        $mode = "Modifier";
+        $continent=Continent::findById($_GET['num']);
+        include('vues/formContinent.php');
+        break;
+
+    case 'delete':
+        $continent=Continent::findById($_GET['num']);
+        $nb=Continent::delete($continent);
+        if($nb==1){
+          $_SESSION['message']=["succeess"=>"Le continent a bien été supprimé"];
+        }  
+        else{
+          $_SESSION['message']=["danger"=>"Le continent a bien n'a pas été supprimé"];
         }
-        
-    if ($b==1){
-        $_SESSION['message']=["success"=>"Le contient a bien a bien ete $message"];
-<?php 
-        $_SESSION['message']=["danger"=>"Le contient a bien ete" $message"]
-    }
-    break;
+        header('location: index.php?uc=continents&action=liste');
+        break;
+
+    case 'valideForm':
+        $continent = new Continent();
+
+        if (empty($_POST['num'])) { // si création
+            $continent->setLibelle($_POST['libelle']);
+            $nb = Continent::add($continent);
+            $message = "ajouté";
+        } else { // cas modification
+            $continent->setNum($_POST['num']);
+            $continent->setLibelle($_POST['libelle']);
+            $nb = Continent::update($continent);
+            $message = "modifié";
+        }
+
+        if ($nb == 1) {
+            $_SESSION['message'] = ["success" => "Le continent a bien été $message"];
+        } else {
+            $_SESSION['message'] = ["danger" => "Le continent n'a pas pu être $message"];
+        }
+
+        header('location:index.php?uc=continents&action=liste');
+        exit();
+        break;
 }
+?>

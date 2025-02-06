@@ -1,8 +1,12 @@
-<?php session_start(); ?>
-<?php
- include "vues/header.php"; //on dit header et dans vue 
-include "modeles/continent.php";
-include "modeles/monPdo.php";
+
+<?php 
+ob_start();
+session_start(); 
+
+ include ("vues/header.php"); //on dit header et dans vue 
+include ("modeles/continent.php");
+include ("modeles/monPdo.php");
+include ("vues/messageFlash.php");
 $uc=empty($_GET['uc'])? "accueil" : $_GET ['uc'];
 //la on va lui donner des consigne avec les case et break on lui dit si il vois acueile alors uc
 switch($uc){  

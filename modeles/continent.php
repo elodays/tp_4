@@ -1,29 +1,26 @@
 <?php 
 class continent {
 
-    private $num ;
-
+    private $num;
     private $libelle;
 
-
     /**
-     * Numero du contient
+     * Numero du continent
      * @var int 
      */
     public function getNum()
     {
-    return $this->num;
+        return $this->num;
     }
 
     /**
-     * Libele du contient 
-     *  @var string
+     * Libele du continent 
+     * @var string
      */
-    public function setNum($num): self
+    public function setNum(int $num): self
     {
-    $this->num = $num;
-
-    return $this;
+        $this->num = $num;
+        return $this;
     }
 
     /**
@@ -33,89 +30,87 @@ class continent {
      */
     public function getLibelle()
     {
-    return $this->libelle;
+        return $this->libelle;
     }
+
     /**
      * ecrit dans le libelle
      */
-
     public function setLibelle(string $libelle): self
     {
-    $this->libelle = $libelle;
-
-    return $this;
+        $this->libelle = $libelle;
+        return $this;
     }
+
     /**
-     * retourne l'ensemble contient
+     * retourne l'ensemble continent
      *
-     * @return Contient [] tableau d'objet contient
+     * @return Continent[] tableau d'objet continent
      */
-    public static function findAll():array
+    public static function findAll(): array
     {
-        $req=MonPdo::getInstance()-> prepare("select * from continent");
-        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'continent');
+        $req = MonPdo::getInstance()->prepare("SELECT * FROM continent");
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'continent');
         $req->execute();
-        $lesResultats=$req->fetchAll();
+        $lesResultats = $req->fetchAll();
         return $lesResultats;
+    }
+
+    /**
+     * trouve un continent par son num
+     * @param integer $id numero continent
+     * @return continent objet continent trouvé
+     */
+    public static function findById(int $id): continent
+    {
+        $req = MonPdo::getInstance()->prepare("SELECT * FROM continent WHERE num = :id"); //on le demande de selectioner le num qui se nom id avec where
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'continent'); //on veut recuperer la class
+        $req->bindParam('id', $id);
+        $req->execute();
+        $leResultat = $req->fetch();
+        return $leResultat; // c'est plus les résultats mais c'est le du num prit
+    }
+
+    /**
+     * permettre d'ajouter
+     * @param integer $continent continent à ajouter
+     * @return int résultat (1 si l'opération a réussi, 0 sinon)
+     */
+    public static function add(continent $continent): int
+    {
+        $req = MonPdo::getInstance()->prepare("INSERT INTO continent (libelle) VALUES (:libelle)"); //
+        $libelle = $continent->getLibelle();
+        $req->bindParam('libelle', $libelle);
+        $nb = $req->execute();   
+        return $nb; //
+    }
+
+    /**
+     * permettre de modifier
+     * @param integer $continent continent à modifier
+     * @return int résultat (1 si l'opération a réussi, 0 sinon)
+     */
+    public static function update(continent $continent): int
+    {
+        $req = MonPdo::getInstance()->prepare("UPDATE continent SET libelle = :libelle WHERE num = :num"); //
+        $num = $continent->getNum();
+        $libelle = $continent->getLibelle();
+        $req->bindParam('num', $num);
+        $req->bindParam('libelle', $libelle);
+        $nb = $req->execute();   
+        return $nb; //
+    }
+
+    /**
+     * permettre de supprimer
+     * @param continent $continent la suppression
+     * @return int résultat (1 si l'opération a réussi, 0 sinon)
+     */
+    public static function delete(continent $continent): int
+    {
+        $req = MonPdo::getInstance()->prepare("DELETE FROM continent WHERE num = :id"); 
+        $req->bindParam('id', $continent->getNum());
+        $nb = $req->execute();   
+        return $nb; //
+    }
 }
-
-
-/**
- * trouve u contient par son num
- * @param integer $id numero continent
- * @return continent objet contient trouve
- */
-
-public static function findById(int $id) :contient
-{
-    $req=MonPdo::getInstance()-> prepare("select * from contient where num= :id"); //on le demande de selectioner le num qui se nom id  avec where
-    $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'continent'); //on veut recuperer la class
-    $req->binParam('id',$id);
-    $req->execute();
-    $leResultat=$req->fetchAll();
-    return $leResultat; // c est plus les resultat mais c'est le du num prit
-}
-
-/**
- * permettre a ajouter
- * @param integer $contient contient a ajouter
- * @return continent resultat (1 si l'operation a reussi , 0 sinon)
- */
-
-
-public static function  add(contient $contient) :int
-{
-    $req=MonPdo::getInstance()-> prepare("insert * from contient(libelle) values(:libelle)"); //
-    $req->binParam('libelle',$continent->getLibelle());
-    $nb=$req->execute();   
-    return $nb; //
-}
-/**
- * permettre modifier
- * @param integer $contient contient a modifier
- * @return contient resultat (1 si l'operation a reussi , 0 sinon)
- */
-
-public static function  update(continent $continent) :int
-{
-$req=MonPdo::getInstance()-> prepare ("update contient set libelle= :libelle where num :num"); //
-$req->binParam('id',$continent->getNum());
-$req->binParam('libelle',$continent->getLibelle());
-$nb=$req->execute();   
-return $nb; //
-
-
-/**
- * permettre de supprimer
- */
-
-
-}
-public static function  delete(continent $continent) :int // la suppression
-{
-    $req=MonPdo::getInstance()-> prepare ("delete continent where num= :id "); 
-$req->binParam('id',$continent->getNum());
-$nb=$req->execute();   
-return $nb; //
-}
-    } 
