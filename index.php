@@ -16,5 +16,7 @@ switch($uc){
      case'continents': // si il voit continant alors faire tous se qui suit jusqu'au puis break
          include('controllers/continentController.php') ; 
         break; // sortie
+        
 }
  include "vues/footer.php";?>
+ 
