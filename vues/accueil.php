@@ -1,63 +1,90 @@
 <main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">Hello, world!</h1>
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-    </div>
-  </div>
-
-  <div class="container mt- 10">
-    <!-- Example row of columns -->
-    <div class="row">
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Will you do the same for me? It's time to face the music I'm no longer your muse. Heard it's beautiful, be the judge and my girls gonna take a vote. I can feel a phoenix inside of me. Heaven is jealous of our love, angels are crying from up above. Yeah, you take me to utopia.</p>
-        <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Standing on the frontline when the bombs start to fall. Heaven is jealous of our love, angels are crying from up above. Can't replace you with a million rings. Boy, when you're with me I'll give you a taste. There’s no going back. Before you met me I was alright but things were kinda heavy. Heavy is the head that wears the crown.</p>
-        <p><a class="btn btn-warning" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Playing ping pong all night long, everything's all neon and hazy. Yeah, she's so in demand. She's sweet as pie but if you break her heart. But down to earth. It's time to face the music I'm no longer your muse. I guess that I forgot I had a choice.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-    </div>
-
-    <hr>
-<div class="container">
-  <div class =row>
-    <div class="col-md-4">
-      <div class="card text-white bg-danger  mb-2" style="max-width: 20rem;">
-        <div class="card-header">Header</div>
-        <div class="card-body">
-          <h4 class="card-title">Danger card title</h4>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-          <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
-          <div class="card-header">Header</div>
-          <div class="card-body">
-           <h4 class="card-title">Danger card title</h4>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-4">
-       <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
-        <div class="card-header">Header</div>
-        <div class="card-body">
-       <h4 class="card-title">Danger card title</h4>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <h1 class="display-3">Bienvenue !</h1>
+      <p>Bienvenue sur le site d'Elodie</p>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" style="height: 600px">
+            <div class="card text-white mb-3" style="height: 600px">
+                <div class="card-header bg-danger">Statistique des livres</div>
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <canvas id="chartContainer"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" style="height: 600px">
+            <div class="card text-white mb-3" style="height: 600px">
+                <div class="card-header bg-danger">Statistique générales</div>
+                <div class="card-body mt-5">
+                    <h4 class="card-title text-center"><a href="index.php?uc=livres&action=list">
+                        <span class="badge badge-success"><?php echo Livre::nbLivre(); ?> </span>
+                        Livres
+                    </a></h4>
+                    <hr>
+                    <h4 class="card-title text-center"><a href="index.php?uc=auteurs&action=list">
+                        <span class="badge badge-primary"><?php echo Auteur::nbAuteur(); ?> </span>
+                        Auteurs
+                    </a></h4>
+                    <hr>
+                    <h4 class="card-title text-center"><a href="index.php?uc=genres&action=list">
+                        <span class="badge badge-danger"><?php echo Genre::nbGenre(); ?> </span>
+                        Genres
+                    </a></h4>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+window.onload = function () {
+    var ctx = document.getElementById('chartContainer').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: <?php echo json_encode(array_column(Livre::nbgenre(), 'label')); ?>,
+            datasets: [{
+                label: 'Répartition des livres par genre',
+                data: <?php echo json_encode(array_column(Livre::nbgenre(), 'y')); ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Répartition des livres par genre'
+                }
+            }
+        }
+    });
+}
+</script>
 </main>

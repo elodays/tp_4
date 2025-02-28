@@ -1,5 +1,5 @@
 <?php 
-class Nationalite {
+class Nationalite{
 
     private $num ;
 
@@ -57,15 +57,15 @@ class Nationalite {
  * Renvoie l'objet continent
  * @return continent
  */
-public function getNumContinent()
+public function getContinent() :continent
 {
-return $this->numContinent :: findyById($this->numContinent); // on recupere le continent 
+return Continent :: findyById($this->numContinent); // on recupere le continent 
 }
 
 /**
  * Set the value of numcontinent
  */
-public function setNumContinent(continent $continent): self
+public function setContinent(continent $continent): self
 {
 $this->numContinent = $Continent->getNum();
 
@@ -79,9 +79,17 @@ return $this;
      *
      * @return nationalite [] tableau d'objet continent
      */
-    public static function findAll():arry
+    public static function findAll(?string $libelle="",?string $continent="Tous"):arry
     {
         $req=MonPdo::getInstance()-> prepare("select n.num, n.libelle as 'libnation' , c.libelle as 'libcontinent' from nationalite n, continent c where n.numContinent=c.num");
+        if($libelle!=""){
+            $texteReq .= " and n.libelle like % .libelle.%";
+        }
+        if(continent!="Tous"){
+            $texteReq .= " and c.num= :continentSel";
+        }
+        $texteReq.=" order by n.libelle";
+        $req=MonPdo::getInstance()-> prepare($texteReq);
         $req->setFetchMode(PDO::FETCH_OBJ,);
         $req->execute();
         $lesResultats=$req->fetchAll();

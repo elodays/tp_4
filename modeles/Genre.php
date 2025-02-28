@@ -1,15 +1,15 @@
 <?php   
-class Continent {
+class Genre {
    
     /**
-     * Numero du Continent
+     * Numero du Genre
      *
      * @var int
      */
     private $num;
  
    /**
-    * Libelle di Continent
+    * Libelle di Genre
     * @var string
     */
     private $libelle;
@@ -60,29 +60,29 @@ class Continent {
     }
 
     /**
-     * Retourne l'ensemble des continents
+     * Retourne l'ensemble des Genres
      *
-     * @return Continent[] tableau d'objet continent
+     * @return Genre[] tableau d'objet Genre
      */
     public static function findAll() :array
     {
-        $req=MonPdo::getInstance()->prepare("SELECT * FROM Continent");
-        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Continent');
+        $req=MonPdo::getInstance()->prepare("SELECT * FROM genre");
+        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'genre');
         $req->execute();
         $lesResultats=$req->fetchAll();
         return $lesResultats;
     }
 
    /**
-    * Trouve un continent par son nom
+    * Trouve un Genre par son nom
     *
-    * @param integer $id numéro du continent
-    * @return Continent objet continent trouvé
+    * @param integer $id numéro du Genre
+    * @return Genre objet Genre trouvé
     */
-    public static function findByid(int $id) :Continent
+    public static function findByid(int $id) :Genre
     {
-        $req=MonPdo::getInstance()->prepare("SELECT * FROM Continent WHERE num= :id");
-        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Continent');
+        $req=MonPdo::getInstance()->prepare("SELECT * FROM genre WHERE num= :id");
+        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'genre');
         $req->bindParam(':id',$id);
         $req->execute();
         $leResultat=$req->fetch();
@@ -90,60 +90,60 @@ class Continent {
 
     }
     /**
-     * Permet d'ajouter un continent
+     * Permet d'ajouter un Genre
      *
-     * @param Continent $continent continent à ajouter
+     * @param Genre $Genre Genre à ajouter
      * @return integer resultat(1 si l'operation à réussi, 0 sinon à échouer)
      */
-    public static function add(Continent $continent) :int
+    public static function add(Genre $genre) :int
     {
-        $req=MonPdo::getInstance()->prepare("INSERT INTO Continent(libelle) Values(:libelle)");
-        $libelle=$continent->getLibelle();
+        $req=MonPdo::getInstance()->prepare("INSERT INTO genre(libelle) Values(:libelle)");
+        $libelle=$genre->getLibelle();
         $req->bindParam(':libelle',$libelle);
         $nb=$req->execute();
         return $nb;
     }
     /**
-     * Permet de modifier un continent
+     * Permet de modifier un Genre
      *
-     * @param Continent $continent continent à modifier
+     * @param Genre $Genre Genre à modifier
      * @return integer resultat(1 si l'operation à réussi, 0 sinon à échouer)
      */
-    public static function update(Continent $continent) :int
+    public static function update(Genre $genre) :int
     {
-        $req=MonPdo::getInstance()->prepare("update Continent set libelle = :libelle where num= :id");
-        $num=$continent->getNum();
-        $libelle=$continent->getLibelle();
+        $req=MonPdo::getInstance()->prepare("update genre set libelle = :libelle where num= :id");
+        $num=$genre->getNum();
+        $libelle=$genre->getLibelle();
         $req->bindParam(':id',$num);
         $req->bindParam(':libelle', $libelle);
         $nb=$req->execute();
         return $nb;
     }
     /**
-     * Permet de supprimer un continent
+     * Permet de supprimer un Genre
      *
-     * @param Continent $continent continent à supprimer 
+     * @param Genre $Genre Genre à supprimer 
      * @return integer
      */
-    public static function delete(Continent $continent) :int
+    public static function delete(Genre $genre) :int
     {
-        $req=MonPdo::getInstance()->prepare("delete from Continent where num= :id");
-        $num=$continent->getNum();
+        $req=MonPdo::getInstance()->prepare("delete from genre where num= :id");
+        $num=$genre->getNum();
         $req->bindParam(':id', $num);
         $nb=$req->execute();
         return $nb;
         
     }
 
+    public static function nbGenre() :int //
+    {
+        $req=MonPdo::getInstance()->prepare("SELECT  COUNT(*) as 'nombreGenre'  FROM genre");
+        $req->execute();
+        $leResultat=$req->fetch();
+      
+        return  $leResultat[0];
 
-    /**
-     * Set numero du Continent
-     *
-     * @param  int  $num  Numero du Continent
-     *
-     * @return  self
-     */ 
-
+    }
 }
 ?>
 
