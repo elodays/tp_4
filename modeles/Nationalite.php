@@ -85,7 +85,7 @@ return $this;
         if($libelle!=""){
             $texteReq .= " and n.libelle like % .libelle.%";
         }
-        if(continent!="Tous"){
+        if($Continent!="Tous"){
             $texteReq .= " and c.num= :continentSel";
         }
         $texteReq.=" order by n.libelle";

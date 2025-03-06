@@ -8,8 +8,8 @@ include "modeles/Nationalite.php";
 include "modeles/Continent.php";
 include "modeles/Auteur.php";
 include "modeles/Genre.php";
-include "modeles/Livre.php";
-include "vues/messagesFlash.php";
+include "modeles/Livres.php";
+include "vues/messageFlash.php";
 
 $uc = empty($_GET['uc']) ? "accueil" : $_GET['uc'];
 

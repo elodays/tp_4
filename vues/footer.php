@@ -31,7 +31,8 @@
     });
 
 
-    ob_end_flush()
+    
 </script>
 </body>
 </html>
+<?php ob_end_flush() ?>
