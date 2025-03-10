@@ -1,21 +1,20 @@
 <?php
 $action=$_GET['action'];
 switch ($action) {
-    case 'list':
+    case 'liste':
         $LesGenres=Genre::findAll();
-       include('vues/listeGenre.php');
+       include('vues/genre/listeGenre.php');
         break;
     
         case 'add':
             $mode="Ajouter";
-           include("vues/
-           /genre/formGenre.php");
+           include("vues/genre/formGenre.php");
             break;
 
             case 'update':
                 $mode="Modifier";
                 $genre=Genre::findByid($_GET['num']);
-           include('vues/formGenre.php');
+           include('vues/genre/formGenre.php');
                 break;
 
                 case 'delete':

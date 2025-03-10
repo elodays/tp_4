@@ -3,7 +3,7 @@ $action=$_GET['action'];
 switch ($action) {
             
     
-    case 'list':
+    case 'liste':
         $titre=""; 
         $auteur="Tous";
         $genre="all";
@@ -26,7 +26,7 @@ switch ($action) {
         $LesLivres=Livre::findAll( $titre,$auteur,$genre);
         $LesGenres=Genre::findAll(); 
         $LesAuteurs=Auteur::findAll(); 
-       include('vues/listeLivre.php');
+       include('vues/livre/listeLivre.php');
       
         break;
     
@@ -35,7 +35,7 @@ switch ($action) {
         $mode="Ajouter";
         $LesGenres=Genre::findall();
         $LesAuteurs=Auteur::findAll();
-        include('vues/formLivre.php');
+        include('vues/livre/formLivre.php');
         break;
     
         
@@ -44,7 +44,7 @@ switch ($action) {
          $LesGenres=Genre::findall();
         $LesAuteurs=Auteur::findAll();
         $livre=Livre::findByid($_GET['num']);
-       include('vues/formLivre.php');
+       include('vues/livre/formLivre.php');
         break;
 
         

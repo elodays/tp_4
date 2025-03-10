@@ -13,7 +13,7 @@
                         if($mode=="Modifier") {
                         $selection = $continent->num == $laNationalite->getContinent()->getNum() ? 'selected' : '';
                         echo "<option value='".$continent->getNum() ."'". $selection.">".$continent->getLibelle(). "</option>";
-                    }
+                    }}
                     ?>
                 </select>
             </div>

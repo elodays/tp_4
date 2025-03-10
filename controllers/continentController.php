@@ -2,20 +2,20 @@
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $action=$_GET['action'];
 switch ($action) {
-    case 'list':
+    case 'liste':
         $LesContinents=Continent::findAll();
-       include('vues/listeContinent.php');
+       include('vues/continent/listeContinents.php');
         break;
     
         case 'add':
             $mode="Ajouter";
-           include('vues/formContinent.php');
+           include('vues/continent/formContinent.php');
             break;
 
             case 'update':
                 $mode="Modifier";
                 $continent=Continent::findByid($_GET['num']);
-           include('vues/formContinent.php');
+           include('vues/continent/formContinent.php');
                 break;
 
                 case 'delete':
